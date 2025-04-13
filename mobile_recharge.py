@@ -6,9 +6,27 @@ from important_info import actual_pinn, total_amount, trans_id
 import sys
 from total_balance import update_balance
 
-def payment():
+
+
+
+def sim_check(marcent_ac_no,sim):
+    if len(marcent_ac_no) == 11:
+        prefix_of_sim = ['018', '016', '017', '015', '019', '013']
+        
+        correct_prefix = prefix_of_sim[sim-1]
+        if correct_prefix == marcent_ac_no[0:3]:
+                pass
+            
+        else:        
+            print("Invalid Phone Number. Try again.")
+            sys.exit()  
+    else: 
+        print("Invalid Number. Try Again.")
+        sys.exit()    
+
+def payment(sim):
     marcent_ac_no = input("Enter Your Phone Number = ")
-    sim_check(marcent_ac_no)
+    sim_check(str(marcent_ac_no),sim)
     amount = int(input("Enter the Amount = "))
     
     total_money = total_amount()
@@ -22,6 +40,8 @@ def payment():
     
     valid_ac(marcent_ac_no)
     valid_money(amount, total_money)
+   
+    
     
     actual_pin = actual_pinn()
   
@@ -33,18 +53,6 @@ def payment():
     else:
         print("Your request is failed due to incorrect PIN number.")
         
-def sim_check(marcent_ac_no):
-    if len(marcent_ac_no) == 11:
-        prefix_of_sim = ['018', '016', '017', '015', '019', '013']
-        for u in range(6):
-            correct_prefix = prefix_of_sim[u]
-            if correct_prefix == str(marcent_ac_no[0:3]):
-                return  # Valid number
-        print("Invalid Phone Number. Try again.")
-        sys.exit()  
-    else: 
-        print("Invalid Number. Try Again.")
-        sys.exit()    
 
 def best_offers():
     offers = [
@@ -128,15 +136,15 @@ def bundle_packs():
     offers_with_out = "\n".join(offers)
     return print(offers_with_out)
 
-def inside_sim():
+def inside_sim(sim):
     recharge_type = int(input("Bkash \n 1. Prepaid \n 2. Postpaid \n 3. Auto_Recharge \n 4. Best Offers \n 5. Internet Packs \n 6. Voice Packs \n 7. Bundle Packs \n 0. Exit \n \n Enter = "))
     
     if recharge_type == 1:
-        payment()
+        payment(sim)
     elif recharge_type == 2:
-        payment()
+        payment(sim)
     elif recharge_type == 3:
-        payment()
+        payment(sim)
     elif recharge_type == 4:
         best_offers()
     elif recharge_type == 5:
@@ -156,7 +164,8 @@ def main_recharge():
     print("Bkash \n")
     sim = int(input(" 1. Robi \n 2. Airtel\n 3. Grameen \n 4. Teletalk \n 5. Banglalink \n Enter = "))
     if 0 < sim < 6:
-        inside_sim()
+        
+        inside_sim(sim)
     else:
         print("Invalid Input. Try again.")
 
